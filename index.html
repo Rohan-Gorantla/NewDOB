@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Date Input Auto-Format</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7-beta.19/jquery.inputmask.min.js"></script>
+  </head>
+  <body>
+    <label for="dateInput">Enter Date (MM/DD/YYYY):</label>
+    <input type="text" id="dateInput" placeholder="MM/DD/YYYY" maxlength="10" />
+
+    <script>
+      $(document).ready(function () {
+        // Apply InputMask for MM/DD/YYYY format
+        $("#dateInput").inputmask("99/99/9999", {
+          showMaskOnHover: false,
+          placeholder: "MM/DD/YYYY", // Set placeholder as "MM/DD/YYYY"
+          clearMaskOnLostFocus: false, // Don't clear mask on lost focus
+        });
+
+        // Handling the keydown event to detect backspace
+        $("#dateInput").on("keydown", function (e) {
+          // Check if backspace key is pressed (keyCode 8)
+          if (e.key === "Backspace") {
+            this.value = ""; // Clear the input field
+            return; // Stop further processing
+          }
+        });
+
+        // Handling the input event for formatting
+        $("#dateInput").on("input", function () {
+          let value = this.value;
+
+          // Remove any non-numeric characters (we only want digits and slashes)
+          value = value.replace(/[^0-9/]/g, "");
+
+          // Split the value into month, day, and year parts
+          let parts = value.split("/");
+
+          // Add leading zero to month if needed
+          if (
+            parts[0] &&
+            parts[0].length === 1 &&
+            parseInt(parts[0]) >= 2 &&
+            parseInt(parts[0]) <= 9
+          ) {
+            parts[0] = "0" + parts[0]; // Add leading zero
+          }
+
+          // Add leading zero to day if needed
+          if (
+            parts[1] &&
+            parts[1].length === 1 &&
+            parseInt(parts[1]) >= 4 &&
+            parseInt(parts[1]) <= 9
+          ) {
+            parts[1] = "0" + parts[1]; // Add leading zero
+          }
+
+          // Rebuild the value with the updated parts
+          let formattedValue = parts.join("/");
+
+          // Update the input value with the newly formatted value
+          this.value = formattedValue;
+
+          // Limit the value to a maximum of 10 characters (MM/DD/YYYY format)
+          if (this.value.length > 10) {
+            this.value = this.value.substring(0, 10);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
