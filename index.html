@@ -13,23 +13,14 @@
 
     <script>
       $(document).ready(function () {
-        // Apply InputMask for MM/DD/YYYY format on all devices
+        // Apply InputMask for MM/DD/YYYY format
         $("#dateInput").inputmask("99/99/9999", {
           showMaskOnHover: false,
           placeholder: "MM/DD/YYYY", // Set placeholder as "MM/DD/YYYY"
           clearMaskOnLostFocus: false, // Don't clear mask on lost focus
         });
 
-        // Handling the keydown event to detect backspace
-        $("#dateInput").on("keydown", function (e) {
-          // Check if backspace key is pressed (keyCode 8)
-          if (e.key === "Backspace") {
-            this.value = ""; // Clear the input field
-            return; // Stop further processing
-          }
-        });
-
-        // Handling the input event for formatting
+        // Handling the input event for additional formatting
         $("#dateInput").on("input", function () {
           let value = this.value;
 
@@ -39,14 +30,14 @@
           // Split the value into month, day, and year parts
           let parts = value.split("/");
 
-          // Add leading zero to month if needed
-          if (parts[0] && parts[0].length === 1 && parseInt(parts[0]) <= 9) {
-            parts[0] = "0" + parts[0]; // Add leading zero
+          // Ensure month is two digits
+          if (parts[0] && parts[0].length === 1) {
+            parts[0] = "0" + parts[0]; // Add leading zero to month
           }
 
-          // Add leading zero to day if needed
-          if (parts[1] && parts[1].length === 1 && parseInt(parts[1]) <= 9) {
-            parts[1] = "0" + parts[1]; // Add leading zero
+          // Ensure day is two digits
+          if (parts[1] && parts[1].length === 1) {
+            parts[1] = "0" + parts[1]; // Add leading zero to day
           }
 
           // Rebuild the value with the updated parts
