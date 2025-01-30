@@ -13,7 +13,7 @@
 
     <script>
       $(document).ready(function () {
-        // Apply InputMask for MM/DD/YYYY format
+        // Apply InputMask for MM/DD/YYYY format on all devices
         $("#dateInput").inputmask("99/99/9999", {
           showMaskOnHover: false,
           placeholder: "MM/DD/YYYY", // Set placeholder as "MM/DD/YYYY"
@@ -40,22 +40,12 @@
           let parts = value.split("/");
 
           // Add leading zero to month if needed
-          if (
-            parts[0] &&
-            parts[0].length === 1 &&
-            parseInt(parts[0]) >= 2 &&
-            parseInt(parts[0]) <= 9
-          ) {
+          if (parts[0] && parts[0].length === 1 && parseInt(parts[0]) <= 9) {
             parts[0] = "0" + parts[0]; // Add leading zero
           }
 
           // Add leading zero to day if needed
-          if (
-            parts[1] &&
-            parts[1].length === 1 &&
-            parseInt(parts[1]) >= 4 &&
-            parseInt(parts[1]) <= 9
-          ) {
+          if (parts[1] && parts[1].length === 1 && parseInt(parts[1]) <= 9) {
             parts[1] = "0" + parts[1]; // Add leading zero
           }
 
